@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DHXScheduler initialization sample</title>
+    <style>
+        body {
+            background-color: #eee;
+        }
+
+        .p3 {
+            margin: 1rem;
+        }
+    </style>
+
+   
+</head>
+<body>
+    <div class="p3" style="text-align:center">
+        <button onclick="DownloadExcel()" class="btn  btn-success" >Excel To Export</button>
+
+        <script>
+            function DownloadExcel() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Calendar/ExcelExport",
+                    cache: false,
+                    success: function (data) {
+                        window.location = '/Calendar/Download';
+                    },
+                    error: function (data) {
+                        Materialize.toast("Something went wrong. ", 3000, 'rounded');
+                    }
+                });
+            }
+        </script>
+        <input class="btn  btn-success" type="button" value="Export to pdf" onclick="@Html.Raw(Model.ToPDF("http://dhtmlxscheduler.appspot.com/export/pdf"))" />
+
+    </div>
+    <div style="height:700px;width:900px;margin:0 auto">
+        @Html.Raw(Model.Render())
+    </div>
+
+</body>
+</html>
+
